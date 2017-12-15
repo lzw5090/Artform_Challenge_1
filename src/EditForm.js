@@ -23,6 +23,10 @@ class EditForm extends Component {
     this.setState({ about: data.value })
   }
   handleOpen = () => this.setState({ modalOpen: true })
+  handleCancel = () => {
+    this.setState({ modalOpen: false });
+      this.setState({ firstName: this.props.firstName, lastName: this.props.lastName, about: this.props.about })
+  }
   handleSubmit = (evt, data) => {
     store.dispatch(changeInfo(data.firstName, data.lastName, data.about));
     this.setState({ modalOpen: false });
@@ -36,12 +40,13 @@ class EditForm extends Component {
         basic
         size='small'>
         <Form onSubmit={(evt) => this.handleSubmit(evt, this.state)} inverted>
-          <Form.Field  control={Input} label='First Name' value={firstName} onChange={this.handleChangeFirstName} />
-          <Form.Field   control={Input} label='Last Name' value={lastName} onChange={this.handleChangeLastName} />
+          <Form.Field required control={Input} label='First Name' value={firstName} onChange={this.handleChangeFirstName} />
+          <Form.Field required control={Input} label='Last Name' value={lastName} onChange={this.handleChangeLastName} />
           <Form.TextArea label='About' placeholder='Tell us more about you...' value={about} onChange={this.handleChangeabout}/>
           <br />
           <Form.Field>
             <Button primary type="save" >Save</Button>
+            <Button onClick={this.handleCancel}>Cancel</Button>
           </Form.Field>
         </Form>
       </Modal>

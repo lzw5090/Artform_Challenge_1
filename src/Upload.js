@@ -13,14 +13,16 @@ class Upload extends Component {
     }
     onDrop = (acceptedFiles) => {
         this.setState({
-            imageUrl: acceptedFiles[0].preview
+            imageUrl: acceptedFiles[0].preview 
         });
     }
     handleOpen = () => this.setState({ modalOpen: true })
-    handleClose = () => this.setState({ modalOpen: false })
+    handleCancel = () => {
+        this.setState({ modalOpen: false });
+        this.setState({ imageUrl: this.props.imageUrl });
+    }
     handleSubmit = () => {
-        const preview = this.state.imageUrl 
-        store.dispatch(changePhoto(preview));
+        store.dispatch(changePhoto(this.state.imageUrl));
         this.setState({ modalOpen: false });
     }
     render() {
@@ -33,7 +35,7 @@ class Upload extends Component {
                 <img src={imageUrl} alt='' height="100%" width="100%"/>
             </Dropzone>
             <Button primary type="save" onClick={this.handleSubmit}>Save</Button>
-            <Button onClick={this.handleClose}>Cancel</Button>
+            <Button onClick={this.handleCancel}>Cancel</Button>
         </Modal>
     );
   }
